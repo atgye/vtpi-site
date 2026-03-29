@@ -38,8 +38,13 @@ export default function PaymentModal({ plan, onClose }: PaymentModalProps) {
       const data = await res.json();
 
       if (data.success) {
-        setStatus("success");
-        setMessage(data.message || "Paiement initié avec succès. Veuillez valider sur votre téléphone.");
+        if (data.redirect_url) {
+          // Redirection vers la page PayTech
+          window.location.href = data.redirect_url;
+        } else {
+          setStatus("success");
+          setMessage(data.message || "Paiement initié avec succès. Veuillez valider sur votre téléphone.");
+        }
       } else {
         setStatus("error");
         setMessage(data.error || "Une erreur est survenue lors du paiement.");

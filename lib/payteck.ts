@@ -31,13 +31,13 @@ export async function initPayment(planId: string, phoneNumber: string, amount: n
     });
 
     const data = await response.json();
-    console.log("Réponse PayTech:", data);
+    console.log("Réponse COMPLÈTE PayTech:", JSON.stringify(data, null, 2));
 
     if (data.success === 1 || data.success === true) {
       return {
         success: true,
         transactionId: data.token || `TXN-${Date.now()}`,
-        paymentUrl: data.redirect_url, // Vraie url de redirection PayTech s'il y en a une
+        redirect_url: data.redirect_url, // Vraie url de redirection PayTech s'il y en a une
         message: "Demande de paiement envoyée. Veuillez valider la transaction.",
       };
     } else {
