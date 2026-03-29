@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import PricingCard from "./PricingCard";
-import PaymentModal from "./PaymentModal";
 import CartToast from "./CartToast";
+import { useRouter } from "next/navigation";
 import { Plan } from "@/types";
 
 const plans: Plan[] = [
@@ -52,7 +52,7 @@ const plans: Plan[] = [
 ];
 
 export default function PricingSection() {
-  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const router = useRouter();
   const [toastPlan, setToastPlan] = useState<Plan | null>(null);
 
   const handleAddToCart = (plan: Plan) => {
@@ -61,17 +61,17 @@ export default function PricingSection() {
   };
 
   const handlePayNow = (plan: Plan) => {
-    setSelectedPlan(plan);
+    router.push(`/paiement?plan=${plan.id}`);
   };
 
   return (
-    <section className="py-24 relative" id="pricing">
+    <section className="py-24 relative bg-gray-50/50" id="pricing">
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Des Tarifs <span className="text-gradient">Transparents</span>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+            Nos <span className="text-gradient">Abonnements</span>
           </h2>
-          <p className="text-gray-400 text-lg">
+          <p className="text-gray-600 text-lg">
             Choisissez le plan qui correspond parfaitement à vos besoins de navigation et de sécurité.
           </p>
         </div>
@@ -88,10 +88,6 @@ export default function PricingSection() {
           ))}
         </div>
       </div>
-
-      {selectedPlan && (
-        <PaymentModal plan={selectedPlan} onClose={() => setSelectedPlan(null)} />
-      )}
       
       <CartToast plan={toastPlan} />
     </section>

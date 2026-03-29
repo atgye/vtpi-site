@@ -5,32 +5,32 @@ import { Shield, Zap, Globe, Lock, Smartphone, HeadphonesIcon } from "lucide-rea
 
 const features = [
   {
-    icon: <Zap size={32} className="text-cyan-400" />,
+    icon: <Zap size={32} />,
     title: "Vitesse Ultra-Rapide",
     description: "Serveurs optimisés pour un streaming sans buffering et des téléchargements éclairs."
   },
   {
-    icon: <Lock size={32} className="text-violet-400" />,
+    icon: <Lock size={32} />,
     title: "Chiffrement Militaire",
     description: "Vos données sont protégées par un algorithme AES-256 de bout en bout."
   },
   {
-    icon: <Globe size={32} className="text-cyan-400" />,
+    icon: <Globe size={32} />,
     title: "Accès Mondial",
     description: "Contournez les géo-restrictions et accédez à n'importe quel contenu global."
   },
   {
-    icon: <Shield size={32} className="text-violet-400" />,
+    icon: <Shield size={32} />,
     title: "Politique Zero-Log",
     description: "Nous ne conservons aucune trace de vos activités en ligne."
   },
   {
-    icon: <Smartphone size={32} className="text-cyan-400" />,
+    icon: <Smartphone size={32} />,
     title: "Multi-Appareils",
     description: "Protégez simultanément votre smartphone, tablette et ordinateur."
   },
   {
-    icon: <HeadphonesIcon size={32} className="text-violet-400" />,
+    icon: <HeadphonesIcon size={32} />,
     title: "Support 24/7",
     description: "Notre équipe technique est toujours là pour vous aider à tout moment."
   }
@@ -38,13 +38,13 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="py-24 relative" id="features">
+    <section className="py-24 relative bg-gray-50" id="features">
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
             Pourquoi Choisir <span className="text-gradient">VTPI ?</span>
           </h2>
-          <p className="text-gray-400 text-lg">
+          <p className="text-gray-600 text-lg">
             Découvrez les avantages exclusifs d'un service premium conçu pour votre sécurité absolue.
           </p>
         </div>
@@ -57,13 +57,13 @@ export default function Features() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="glass-card p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-300"
+              className="light-card p-8 rounded-3xl"
             >
-              <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6">
+              <div className="w-16 h-16 rounded-2xl bg-blue-50 text-primary flex items-center justify-center mb-6 shadow-sm">
                 {feature.icon}
               </div>
-              <h3 className="text-xl font-bold mb-4">{feature.title}</h3>
-              <p className="text-gray-400 leading-relaxed">
+              <h3 className="text-xl font-bold mb-4 text-gray-800">{feature.title}</h3>
+              <p className="text-gray-600 leading-relaxed">
                 {feature.description}
               </p>
             </motion.div>

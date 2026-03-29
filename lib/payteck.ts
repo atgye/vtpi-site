@@ -14,30 +14,44 @@ export async function initPayment(planId: string, phoneNumber: string, amount: n
       ipn_url: process.env.PAYTECK_IPN_URL,
       success_url: process.env.PAYTECK_SUCCESS_URL,
       cancel_url: process.env.PAYTECK_CANCEL_URL,
-      custom_data: {
-        planId,
-        phoneNumber,
+      custom_field: JSON.stringify({ planId, phoneNumber }),
+    };
+
+    console.log("Appel API PayTech Réel avec le payload:", payload);
+
+    const response = await fetch("https://paytech.sn/api/payment/request-payment", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "API_KEY": API_KEY,
+        "API_SECRET": API_SECRET
       },
-    };
+      body: JSON.stringify(payload)
+    });
 
-    console.log("Initiating Payment to PayTeck API:", payload);
+    const data = await response.json();
+    console.log("Réponse PayTech:", data);
 
-    // Simulated API Call with Artificial Latency as requested
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    // Return successful response for UI simulation in test mode
-    return {
-      success: true,
-      transactionId: `TXN-${Date.now()}`,
-      message: "Demande de paiement envoyée sur votre téléphone. Veuillez composer le code secret pour confirmer.",
-    };
+    if (data.success === 1 || data.success === true) {
+      return {
+        success: true,
+        transactionId: data.token || `TXN-${Date.now()}`,
+        paymentUrl: data.redirect_url, // Vraie url de redirection PayTech s'il y en a une
+        message: "Demande de paiement envoyée. Veuillez valider la transaction.",
+      };
+    } else {
+      return { 
+        success: false, 
+        error: data.errors?.[0] || 'Erreur PayTech. Vérifiez vos clés API ou votre configuration.' 
+      };
+    }
   } catch (error) {
     console.error("Erreur InitPayment PayTeck:", error);
-    return { success: false, error: "Erreur lors de l'initialisation du paiement." };
+    return { success: false, error: "Erreur de connexion avec le serveur de paiement." };
   }
 }
 
 export async function verifyPayment(transactionId: string) {
-  // Simulated verification
   return { success: true, status: "completed", transactionId };
 }
